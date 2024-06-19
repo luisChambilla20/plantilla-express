@@ -35,8 +35,11 @@ const UsuarioSchema = Schema({
 
 // DECIDIMOS ELIMINAR ALGUNOS DATOS AL MOMENTO DE LA RESPONSE PERO SIGUE EN LA DB
 UsuarioSchema.methods.toJSON = function () {
-  const { __v, password, ...usuario } = this.toObject();
-  return usuario;
+  const { __v, password, _id, ...usuario } = this.toObject();
+
+  const user = { uid: _id, ...usuario };
+
+  return user;
 };
 
 module.exports = model("Usuario", UsuarioSchema);
