@@ -1,3 +1,5 @@
+const Categoria = require("../models/categoria");
+const Producto = require("../models/producto");
 const Rol = require("../models/rol");
 const Usuario = require("../models/usuario");
 
@@ -21,11 +23,50 @@ const existeUsuarioPorId = async (id = "") => {
   // VERIFICAR SI EL ID EXISTE
   const existeId = await Usuario.findById(id);
 
-  console.log(existeId);
-
   if (!existeId) {
     throw new Error("El ID no existe en la DB");
   }
 };
 
-module.exports = { rolValido, emailExiste, existeUsuarioPorId };
+const existeCategoria = async (id = "") => {
+  const categoria = await Categoria.findById(id);
+
+  if (!categoria) {
+    throw new Error("El id no existe en la DB");
+  }
+
+  if (!categoria.estado) {
+    throw new Error("Categoria inactiva - hable con el administrador");
+  }
+};
+
+const existeProductoPorId = async (id = "") => {
+  const producto = await Producto.findById(id);
+
+  if (!producto) {
+    throw new Error("El id no existe en la DB");
+  }
+
+  if (!producto.estado) {
+    throw new Error("Producto inactivo - hable con el administrador");
+  }
+};
+
+const existeNombreProducto = async (nombre = "") => {
+  const productoDB = await Producto.findOne({ nombre: nombre.toUpperCase() });
+
+  console.log(productoDB);
+
+  if (productoDB) {
+    throw new Error("Nombre invalido para actualizar producto");
+  }
+};
+
+module.exports = {
+  rolValido,
+  emailExiste,
+  existeUsuarioPorId,
+  existeCategoria,
+  existeProductoPorId,
+  existeNombreProducto,
+};
