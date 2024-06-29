@@ -1,3 +1,4 @@
+const { type } = require("express/lib/response");
 const { Schema, model, Types } = require("mongoose");
 
 const ProductoSchema = Schema({
@@ -10,6 +11,9 @@ const ProductoSchema = Schema({
     type: Boolean,
     default: true,
     required: true,
+  },
+  img: {
+    type: String,
   },
   usuario: {
     type: Schema.Types.ObjectId,

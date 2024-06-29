@@ -69,7 +69,7 @@ const googleSigIn = async (req = request, res = response) => {
       };
 
       usuario = new Usuario(data);
-      await usuario.save();
+      usuario.save();
     }
 
     //VERIFICAR SU ESTADO ACTIVO
